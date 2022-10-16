@@ -22,4 +22,4 @@ Comming soon.
   - [ ] From GitHub
   - [ ] ~~From Spigot~~
 - [ ] Init command
- - [ ] From current server
+  - [ ] From current server
