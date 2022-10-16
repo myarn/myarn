@@ -1,6 +1,6 @@
 # Myarn (WIP)
 This project is working in progress.  
-If use myarn in producation, cannot be held responsible.
+If use myarn, cannot be held responsible.
 
 Myarn is Minecraft Server Manager.
 Like package manager.
