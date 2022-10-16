@@ -15,3 +15,11 @@ deno install -n myarn https://github.com/myarn/myarn/raw/main/myarn.ts
 
 ### Linux, Mac, Windows without Deno
 Comming soon.
+
+## Roadmap
+
+- [ ] Install plugins commands
+  - [ ] From GitHub
+  - ~~[ ] From Spigot~~
+- [ ] Init command
+ - [ ] From current server
