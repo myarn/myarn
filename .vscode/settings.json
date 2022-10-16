@@ -1,0 +1,7 @@
+{
+  "deno.enable": true,
+  "deno.unstable": true,
+  "yaml.schemas": {
+    "file:///Users/tsutoringo/Desktop/workspaces/projects/myarn/schema.json": "file:///Users/tsutoringo/Desktop/workspaces/projects/myarn/myarn.yaml"
+  }
+}

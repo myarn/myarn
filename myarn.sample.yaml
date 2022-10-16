@@ -1,0 +1,6 @@
+# yaml-language-server: $schema=./schema.json
+name: Vanilla Server
+server:
+  client: purpur
+  version: 1.19.2
+  build: '1814'

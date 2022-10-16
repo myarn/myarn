@@ -1,0 +1,23 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "server": {
+      "type": "object",
+      "properties": {
+        "client": {
+          "$ref": "#/definitions/client"
+        }
+      }
+    }
+  },
+  "definitions": {
+    "client": {
+      "type": "string",
+      "enum": [ "vanilla", "paper", "purpur" ]
+    }
+  }
+}

@@ -1,0 +1,4 @@
+server:
+  client: paper
+  version: 1.18.2
+  build: 388
