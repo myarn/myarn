@@ -23,3 +23,4 @@ Comming soon.
   - [ ] ~~From Spigot~~
 - [ ] Init command
   - [ ] From current server
+- [ ] Checksum
