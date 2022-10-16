@@ -1,6 +1,9 @@
 # Myarn (WIP)
-This project is working in progress.
+This project is working in progress.  
 If use myarn in pruducation, cannot be held responsible.
+
+Myarn is Minecraft Server Manager.
+Like package manager.
 
 ## Install
 
