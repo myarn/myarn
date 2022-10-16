@@ -20,6 +20,6 @@ Comming soon.
 
 - [ ] Install plugins commands
   - [ ] From GitHub
-  - ~~[ ] From Spigot~~
+  - [ ] ~~From Spigot~~
 - [ ] Init command
  - [ ] From current server
