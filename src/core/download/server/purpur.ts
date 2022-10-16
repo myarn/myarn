@@ -1,8 +1,8 @@
 import { join } from '../../../deps.ts';
 import { namedDownload, request } from '../../../utils/mod.ts';
-import { DownloadFunction } from './mod.ts';
+import { ServerDownloadFunction } from './mod.ts';
 
-export const downloadPurpurServer: DownloadFunction = async (path, mcVersion, buildNumber = 'latest') => {
+export const downloadPurpurServer: ServerDownloadFunction = async (path, mcVersion, buildNumber = 'latest') => {
 
   const build = await getPurpurBuild(mcVersion, buildNumber);
   const filePath = join(path, `purpur_${build.version}_${build.build}.jar`);

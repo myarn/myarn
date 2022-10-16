@@ -1,9 +1,9 @@
 
 import { join } from '../../../deps.ts';
 import { request, namedDownload } from '../../../utils/mod.ts';
-import { ServerDonwloadResult, DownloadFunction } from './mod.ts';
+import { ServerDonwloadResult, ServerDownloadFunction } from './mod.ts';
 
-export const downloadVanillaServer: DownloadFunction = async (path: string, mcVersion: string): Promise<ServerDonwloadResult> => {
+export const downloadVanillaServer: ServerDownloadFunction = async (path: string, mcVersion: string): Promise<ServerDonwloadResult> => {
   const versionManifest = await getVersionManifest();
   const shortVersion: ShortVersion | void = versionManifest.versions.find<ShortVersion>((v): v is ShortVersion => v.id === mcVersion);
 

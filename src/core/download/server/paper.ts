@@ -1,9 +1,9 @@
 import { join } from "../../../deps.ts";
 import { request } from "../../../utils/mod.ts";
 import { namedDownload } from "../../../utils/namedDownload.ts";
-import { DownloadFunction } from "./mod.ts";
+import { ServerDownloadFunction } from "./mod.ts";
 
-export const downloadPaperServer: DownloadFunction = async (path, mcVersion, buildNumber) => {
+export const downloadPaperServer: ServerDownloadFunction = async (path, mcVersion, buildNumber) => {
   const versionGroup = trimVersion(mcVersion);
 
   const { builds } = await getPaperBuilds(versionGroup);

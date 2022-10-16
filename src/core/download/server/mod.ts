@@ -28,7 +28,7 @@ export * from './paper.ts';
 export * from './purpur.ts';
 export * from './vanilla.ts';
 
-export interface DownloadFunction {
+export interface ServerDownloadFunction {
   (path: string, mcVersion: string, buildNumber?: string): Promise<ServerDonwloadResult>;
 }
 
