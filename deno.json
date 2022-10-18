@@ -1,0 +1,6 @@
+{
+  "tasks": {
+    "help": "./myarn.ts --help",
+    "install": "deno install -f --allow-read --allow-write --allow-net --unstable -n myarn ./myarn.ts"
+  }
+}
