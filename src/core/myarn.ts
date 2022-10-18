@@ -1,8 +1,8 @@
 import { DEFAULT_CONFIG_FILES } from '../constants.ts';
-import { downloadServer, ServerDonwloadResult } from './download/server/mod.ts';
+import { downloadServer, ServerDownloadResult } from './download/server/mod.ts';
 import { join, YAML } from '../deps.ts';
 import { MyarnConfig, MyarnLock } from '../types/myarn.ts';
-import { ServerClient } from '../types/index.ts';
+import { ServerClientType } from '../types/index.ts';
 import { isFile, throwErrorIfFileNotExist, DeepPartial } from '../utils/mod.ts';
 
 export class ConfigFile {
@@ -26,8 +26,6 @@ export class ConfigFile {
         }
       }
     }
-
-    console.log(resolvedPath);
 
     this.filePath = resolvedPath;
 
@@ -86,7 +84,7 @@ export class LockFile {
     this.lockfile.server = file.server;
   }
 
-  setServer (downloadResult: ServerDonwloadResult) {
+  setServer (downloadResult: ServerDownloadResult) {
     this.lockfile.server = {
       client: downloadResult.client,
       file: downloadResult.filePath,
@@ -98,8 +96,6 @@ export class LockFile {
 
   async save () {
     if (!this.filePath) return;
-    
-    console.log(this.lockfile);
 
     await Deno.writeTextFile(this.filePath, YAML.stringify(this.lockfile, {
       skipInvalid: true
@@ -119,11 +115,11 @@ export default class Myarn {
   constructor (
     protected directory: string
   ) {
-    this.configFile = new ConfigFile(directory);
-    this.lockFile = new LockFile(directory);
+    this.configFile = new Myarn.ConfigFile(directory);
+    this.lockFile = new Myarn.LockFile(directory);
   }
 
-  async installServer (type: ServerClient, mcVersion: string, build?: string) {
+  async installServer (type: ServerClientType, mcVersion: string, build?: string) {
     const result = await downloadServer(this.directory, { type, mcVersion, build });
 
     this.configFile.setServer({

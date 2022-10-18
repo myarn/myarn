@@ -1,37 +1,51 @@
-import { join } from "../../../deps.ts";
-import { request } from "../../../utils/mod.ts";
-import { namedDownload } from "../../../utils/namedDownload.ts";
-import { ServerDownloadFunction } from "./mod.ts";
+import { join } from '../../../deps.ts';
+import { request } from '../../../utils/mod.ts';
+import { namedDownload } from '../../../utils/namedDownload.ts';
+import { ServerClient } from './ServerClient.ts';
+import { ServerDownloadResult } from './mod.ts';
 
-export const downloadPaperServer: ServerDownloadFunction = async (path, mcVersion, buildNumber) => {
-  const versionGroup = trimVersion(mcVersion);
+export class Paper extends ServerClient { 
+  static getAvailableVersions (): Promise<string[]> {
+    return new Promise(resolve => resolve([...AVAILABLE_VERSION]))
+  }
 
-  const { builds } = await getPaperBuilds(versionGroup);
+  static async getAvailableBuilds(version: string) {
+    return (await getPaperBuilds(version)).builds.map(build => ({
+      name: `${build.version} (#${build.build})`,
+      value: `${build.build}`
+    }));
+  }
+
+  async downloadServer(path: string, mcVersion: string, buildNumber?: string): Promise<ServerDownloadResult> {
+    const versionGroup = trimVersion(mcVersion);
+
+    const { builds } = await getPaperBuilds(versionGroup);
+    
+    const build = buildNumber == undefined
+      ? builds[builds.length - 1]
+      : builds.find<Build>((b): b is Build => `${b.build}` == buildNumber);
   
-  const build = buildNumber == undefined
-    ? builds[builds.length - 1]
-    : builds.find<Build>((b): b is Build => b.build+'' == buildNumber);
-
-  if (!build) throw new Error(`I couldn't find that version${mcVersion} and build(${buildNumber}) of the server.`);
-  if (build.version !== mcVersion) throw new Error(`The version received did not match the version of the build.`);
-
-  const filePath = join(path, `paper_${build.version}_${build.build}.jar`);
-  const { hash } = await namedDownload(getPaperDownloadURL(build), filePath, {
-    algorithm: 'sha256',
-    value: build.downloads.application.sha256
-  });
-
-  return {
-    filePath,
-    version: mcVersion,
-    client: 'paper',
-    build: build.build+'',
-    hash: {
+    if (!build) throw new Error(`I couldn't find that version${mcVersion} and build(${mcVersion}) of the server.`);
+    if (build.version !== mcVersion) throw new Error(`The version received did not match the version of the build.`);
+  
+    const filePath = join(path, `paper_${build.version}_${build.build}.jar`);
+    const { hash } = await namedDownload(getPaperDownloadURL(build), filePath, {
       algorithm: 'sha256',
-      value: hash
-    }
-  };
-};
+      value: build.downloads.application.sha256
+    });
+
+    return {
+      filePath,
+      version: mcVersion,
+      client: 'paper',
+      build: build.build+'',
+      hash: {
+        algorithm: 'sha256',
+        value: hash
+      }
+    };
+  }
+}
 
 const trimVersion = (version: string) => version.split('.').slice(0, 2).join('.');
 const getPaperDownloadURL = (build: Build) => `https://api.papermc.io/v2/projects/paper/versions/${build.version}/builds/${build.build}/downloads/${build.downloads.application.name}`

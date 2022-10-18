@@ -1,33 +1,40 @@
 
 import { join } from '../../../deps.ts';
 import { request, namedDownload } from '../../../utils/mod.ts';
-import { ServerDonwloadResult, ServerDownloadFunction } from './mod.ts';
+import { ServerClient } from './ServerClient.ts';
+import { ServerDownloadResult } from './mod.ts';
 
-export const downloadVanillaServer: ServerDownloadFunction = async (path: string, mcVersion: string): Promise<ServerDonwloadResult> => {
-  const versionManifest = await getVersionManifest();
-  const shortVersion: ShortVersion | void = versionManifest.versions.find<ShortVersion>((v): v is ShortVersion => v.id === mcVersion);
+export class Vanilla extends ServerClient {
+  static async getAvailableVersions (): Promise<string[]> {
+    return (await getVersionManifest()).versions.map(v => v.id);
+  }
 
-  if (!shortVersion) throw new Error(`Unknown version. version: ${mcVersion}`);
+  async downloadServer(path: string, mcVersion: string): Promise<ServerDownloadResult> {
+    const versionManifest = await getVersionManifest();
+    const shortVersion: ShortVersion | void = versionManifest.versions.find<ShortVersion>((v): v is ShortVersion => v.id === mcVersion);
 
-  const version: Version = await getVersion(shortVersion);
+    if (!shortVersion) throw new Error(`Unknown version. version: ${mcVersion}`);
 
-  if (!version.downloads.server) throw new Error(`I couldn't find that version(${mcVersion}) of the server.`);
+    const version: Version = await getVersion(shortVersion);
 
-  const filePath = join(path, `vanilla_${version.id}.jar`);
-  const { hash } = await namedDownload(version.downloads.server.url, filePath, {
-    algorithm: 'sha1',
-    value: version.downloads.server.sha1
-  });
+    if (!version.downloads.server) throw new Error(`I couldn't find that version(${mcVersion}) of the server.`);
 
-  return {
-    filePath,
-    version: mcVersion,
-    client: 'vanilla',
-    hash: {
+    const filePath = join(path, `vanilla_${version.id}.jar`);
+    const { hash } = await namedDownload(version.downloads.server.url, filePath, {
       algorithm: 'sha1',
-      value: hash
-    }
-  };
+      value: version.downloads.server.sha1
+    });
+
+    return {
+      filePath,
+      version: mcVersion,
+      client: 'vanilla',
+      hash: {
+        algorithm: 'sha1',
+        value: hash
+      }
+    };
+  }
 }
 
 export const getVersionManifest = async (): Promise<VersionManifest> => {
