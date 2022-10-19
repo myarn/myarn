@@ -131,5 +131,9 @@ export default class Myarn {
 
     await this.configFile.save();
     await this.lockFile.save();
+
+    return result;
   }
+
+  
 }
