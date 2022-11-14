@@ -3,9 +3,9 @@ import { downloadServer, ServerDownloadResult } from './download/server/mod.ts';
 import { join, YAML } from '../deps.ts';
 import { MyarnConfig, MyarnLock } from '../types/myarn.ts';
 import { ServerClientType } from '../types/index.ts';
-import { isFile, throwErrorIfFileNotExist, DeepPartial } from '../utils/mod.ts';
+import { isFile, throwErrorIfFileNotExist, DeepPartial, deleteUndefinedKeys } from '../utils/mod.ts';
 
-export class ConfigFile {
+export class ServerConfigFile {
   protected filePath: string | null;
   protected config: DeepPartial<MyarnConfig> = {};
 
@@ -44,9 +44,14 @@ export class ConfigFile {
     this.config.server = server;
   }
 
+  exist (): boolean {
+    return !!this.filePath && isFile(this.filePath);
+  }
+
   async save () {
     if (!this.filePath) return;
-
+  
+    deleteUndefinedKeys(this.config);
     await Deno.writeTextFile(this.filePath, YAML.stringify(this.config));
   }
 }
@@ -55,7 +60,7 @@ export class LockFile {
   static lockfilename = 'myarn.lock.yaml';
   static currentLockfileVersion = 1;
 
-  protected filePath: string | null;
+  protected filePath: string;
   protected lockfile: DeepPartial<MyarnLock> = {
     lockfileVersion: LockFile.currentLockfileVersion
   };
@@ -95,8 +100,7 @@ export class LockFile {
   }
 
   async save () {
-    if (!this.filePath) return;
-
+    deleteUndefinedKeys(this.lockfile);
     await Deno.writeTextFile(this.filePath, YAML.stringify(this.lockfile, {
       skipInvalid: true
     }), {
@@ -105,35 +109,37 @@ export class LockFile {
   }
 }
 
+export class Config {
+  
+}
+
 export default class Myarn {
-  static ConfigFile = ConfigFile;
+  static ServerConfigFile = ServerConfigFile;
   static LockFile = LockFile;
 
-  configFile: ConfigFile;
+  serverConfigFile: ServerConfigFile;
   lockFile: LockFile;
 
   constructor (
     protected directory: string
   ) {
-    this.configFile = new Myarn.ConfigFile(directory);
+    this.serverConfigFile = new Myarn.ServerConfigFile(directory);
     this.lockFile = new Myarn.LockFile(directory);
   }
 
   async installServer (type: ServerClientType, mcVersion: string, build?: string) {
     const result = await downloadServer(this.directory, { type, mcVersion, build });
 
-    this.configFile.setServer({
+    this.serverConfigFile.setServer({
       client: result.client,
       version: result.version,
       build: result.build
     });
     this.lockFile.setServer(result);
 
-    await this.configFile.save();
+    await this.serverConfigFile.save();
     await this.lockFile.save();
 
     return result;
   }
-
-  
 }

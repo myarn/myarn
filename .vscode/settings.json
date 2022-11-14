@@ -1,6 +1,9 @@
 {
   "deno.enable": true,
   "deno.unstable": true,
+  "deno.inlayHints.parameterNames.enabled": "literals",
+  "deno.inlayHints.parameterNames.suppressWhenArgumentMatchesName": true,
+  "deno.inlayHints.parameterTypes.enabled": true,
   "yaml.schemas": {
     "file:///Users/tsutoringo/Desktop/workspaces/projects/myarn/schema.json": "file:///Users/tsutoringo/Desktop/workspaces/projects/myarn/myarn.yaml"
   }

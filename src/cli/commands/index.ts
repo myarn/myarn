@@ -1,6 +1,7 @@
 import { Command } from '../../deps.ts';
 
 import { download } from './download.ts';
+import { init } from './init.ts';
 import { install } from './install.ts';
 
 
@@ -15,8 +16,7 @@ cli
     value: (value: string): string => value ? value : Deno.cwd()
   })
   .command('download', download)
-  .command('install', install);
-
-cli.command('init', 'Init directory');
+  .command('install', install)
+  .command('init', init);
 
 export default cli;
