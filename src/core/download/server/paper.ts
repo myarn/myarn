@@ -13,7 +13,7 @@ export class Paper extends ServerClient {
     return (await getPaperBuilds(version)).builds.map(build => ({
       name: `${build.version} (#${build.build})`,
       value: `${build.build}`
-    }));
+    })).reverse();
   }
 
   async downloadServer(path: string, mcVersion: string, buildNumber?: string): Promise<ServerDownloadResult> {
@@ -26,7 +26,7 @@ export class Paper extends ServerClient {
       : builds.find<Build>((b): b is Build => `${b.build}` == buildNumber);
   
     if (!build) throw new Error(`I couldn't find that version${mcVersion} and build(${mcVersion}) of the server.`);
-    if (build.version !== mcVersion) throw new Error(`The version received did not match the version of the build.`);
+    if (trimVersion(build.version) !== versionGroup) throw new Error(`The version received did not match the version of the build.`);
   
     const filePath = join(path, `paper_${build.version}_${build.build}.jar`);
     const { hash } = await namedDownload(getPaperDownloadURL(build), filePath, {
