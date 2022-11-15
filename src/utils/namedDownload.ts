@@ -44,7 +44,7 @@ export async function namedDownload(
     }
 
     progress.stop();
-    projector.addLine().addText('Complete!');
+    projector.addLine().addText('Downloaded successfully!!');
   } else {
     await response.body.pipeTo(file.writable);
   }

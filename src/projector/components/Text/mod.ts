@@ -47,13 +47,15 @@ export class Text {
 export class LoadingIndicator extends Text {
   index = 0;
   id?: number;
+  isCompleted = false;
+  completeText = '✔';
 
   constructor (
     protected indicators: string[] = ['⠙', '⠸', '⠴', '⠦' , '⠇', '⠋'],
     protected updateInterval: number = 200
   ) {
     super();
-    this.watchTower.push('index');
+    this.watchTower.push('index', 'isCompleted');
 
     this.next();
     this.start();
@@ -68,8 +70,13 @@ export class LoadingIndicator extends Text {
     if(this.index >= this.indicators.length) this.index = 0;
   }
 
-  get renderedText() : string {
-    return this.indicators[this.index];
+  get renderedText (): string {
+    return (this.isCompleted && this.completeText) ? this.completeText : this.indicators[this.index];
+  }
+
+  complete () {
+    this.isCompleted = true;
+    this.stop();
   }
 
   stop () {

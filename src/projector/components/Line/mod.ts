@@ -57,8 +57,8 @@ export class DwonloadProgress extends Line {
     this.progressBar.value = size;
     this.value = size;
   }
-  
+
   stop () {
-    this.loadingIngicator.stop();
+    this.loadingIngicator.complete();
   }
 }
