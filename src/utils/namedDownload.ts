@@ -1,7 +1,6 @@
 import { createHash, basename } from '../deps.ts';
 import { HashAlgorithm } from '../types/index.ts';
 import { streamAsyncIterator, request } from './mod.ts';
-import { filesize } from 'npm:filesize';
 import { DwonloadProgress, Projector } from '../projector/mod.ts';
 
 export async function namedDownload(remoteURL: string, name: string): Promise<{ hash: void }>;
