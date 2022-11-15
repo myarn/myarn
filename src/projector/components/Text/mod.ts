@@ -12,8 +12,10 @@ export class Text {
     return new Proxy(this, {
       set: (target, key, value) => {
         // @ts-ignore Proxy Set
+        const oldValue = target[key];
+        // @ts-ignore Proxy Set
         target[key] = value;
-        if (this.watchTower.includes(key)) this.render();
+        if (oldValue !== value && this.watchTower.includes(key)) this.render();
 
         return true;
       },
