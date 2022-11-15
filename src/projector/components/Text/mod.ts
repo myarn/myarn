@@ -103,7 +103,6 @@ export class FunctionalText extends Text {
 }
 
 export class ProgressBar extends Text {
-
   constructor (
     public value: number,
     public max: number,
