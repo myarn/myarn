@@ -7,6 +7,7 @@ export * from 'https://deno.land/x/cliffy@v0.25.4/command/mod.ts';
 export * from 'https://deno.land/x/cliffy@v0.25.4/prompt/mod.ts';
 export * from 'https://deno.land/x/cliffy@v0.25.4/ansi/mod.ts';
 export * as YAML from 'https://deno.land/std@0.157.0/encoding/yaml.ts';
+export * from 'https://cdn.skypack.dev/filesize@10.0.5';
 
 import { Octokit as OctokitCore } from 'https://cdn.skypack.dev/@octokit/core?dts';
 import { restEndpointMethods } from 'https://cdn.skypack.dev/@octokit/plugin-rest-endpoint-methods?dts';

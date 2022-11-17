@@ -1,4 +1,4 @@
-import { filesize } from 'npm:filesize';
+import { filesize } from '../../../deps.ts';
 import { Projector } from '../../mod.ts';
 import { FunctionalText, LoadingIndicator, ProgressBar, Text, TextComponent } from '../Text/mod.ts';
 
