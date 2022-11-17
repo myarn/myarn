@@ -3,10 +3,10 @@ import { HashAlgorithm } from '../types/index.ts';
 import { streamAsyncIterator, request } from './mod.ts';
 import { DwonloadProgress, Projector } from '../projector/mod.ts';
 
-export async function namedDownload(remoteURL: string, name: string): Promise<{ hash: void }>;
-export async function namedDownload(remoteURL: string, name: string, hash: { algorithm: HashAlgorithm, value?: string }): Promise<{ hash: string }>;
+export async function download(remoteURL: string, name: string): Promise<{ hash: void }>;
+export async function download(remoteURL: string, name: string, hash: { algorithm: HashAlgorithm, value?: string }): Promise<{ hash: string }>;
 
-export async function namedDownload(
+export async function download(
   remoteURL: string,
   path: string,
   hash?: {

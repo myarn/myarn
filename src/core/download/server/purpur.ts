@@ -1,5 +1,5 @@
 import { join } from '../../../deps.ts';
-import { namedDownload, request } from '../../../utils/mod.ts';
+import { download, request } from '../../../utils/mod.ts';
 import { ServerDownloadResult } from './mod.ts';
 import { ServerClient } from './ServerClient.ts';
 
@@ -18,7 +18,7 @@ export class Purpur extends ServerClient {
   async downloadServer(path: string, mcVersion: string, buildNumber = 'latest'): Promise<ServerDownloadResult> {
     const build = await getPurpurBuild(mcVersion, buildNumber);
     const filePath = join(path, `purpur_${build.version}_${build.build}.jar`);
-    const { hash } = await namedDownload(getPurpurDownloadURL(build), filePath, {
+    const { hash } = await download(getPurpurDownloadURL(build), filePath, {
       algorithm: 'md5',
       value: build.md5
     });

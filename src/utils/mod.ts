@@ -22,5 +22,5 @@ export type DeepPartial<T> = {
 };
 
 export * from './request.ts';
-export * from './namedDownload.ts';
+export * from './download.ts';
 export * from './streamAsyncIterator.ts';

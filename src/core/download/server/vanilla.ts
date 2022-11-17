@@ -1,6 +1,6 @@
 
 import { join } from '../../../deps.ts';
-import { request, namedDownload } from '../../../utils/mod.ts';
+import { request, download } from '../../../utils/mod.ts';
 import { ServerClient } from './ServerClient.ts';
 import { ServerDownloadResult } from './mod.ts';
 
@@ -20,7 +20,7 @@ export class Vanilla extends ServerClient {
     if (!version.downloads.server) throw new Error(`I couldn't find that version(${mcVersion}) of the server.`);
 
     const filePath = join(path, `vanilla_${version.id}.jar`);
-    const { hash } = await namedDownload(version.downloads.server.url, filePath, {
+    const { hash } = await download(version.downloads.server.url, filePath, {
       algorithm: 'sha1',
       value: version.downloads.server.sha1
     });
