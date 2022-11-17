@@ -1,6 +1,6 @@
 import { join } from '../../../deps.ts';
 import { request } from '../../../utils/mod.ts';
-import { namedDownload } from '../../../utils/namedDownload.ts';
+import { download } from '../../../utils/download.ts';
 import { ServerClient } from './ServerClient.ts';
 import { ServerDownloadResult } from './mod.ts';
 
@@ -29,7 +29,7 @@ export class Paper extends ServerClient {
     if (trimVersion(build.version) !== versionGroup) throw new Error(`The version received did not match the version of the build.`);
   
     const filePath = join(path, `paper_${build.version}_${build.build}.jar`);
-    const { hash } = await namedDownload(getPaperDownloadURL(build), filePath, {
+    const { hash } = await download(getPaperDownloadURL(build), filePath, {
       algorithm: 'sha256',
       value: build.downloads.application.sha256
     });
