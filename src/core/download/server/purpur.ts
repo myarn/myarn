@@ -43,7 +43,7 @@ export const getPurpurBuild = async (version: string, build: string) => (await (
 export const getPurpurDownloadURL = ({build, version}: PurpurBuild) => `https://api.purpurmc.org/v2/purpur/${version}/${build}/download`;
 
 export type PurpurAvailableVersions = {
-  project: string;
+  project: string,
   versions: string[]
 };
 
@@ -67,10 +67,10 @@ export type PurpurBuild = {
   version: string
 };
 
-export interface PurpurCommits {
-  author: string;
-  description: string;
-  email: string;
-  hash: string;
-  timestamp: number;
-}
+export type PurpurCommits = {
+  author: string,
+  description: string,
+  email: string,
+  hash: string,
+  timestamp: number
+};

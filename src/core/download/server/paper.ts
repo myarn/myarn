@@ -72,31 +72,31 @@ export const AVAILABLE_VERSION = [
 
 export type AvailableVersion = typeof AVAILABLE_VERSION[number] | (string & Record<never, never>);
 
-export interface PaperVersion {
-  builds: Build[];
-  project_id: string;
-  project_name: string;
-  version_group: string;
-  versions: string[];
-}
+export type PaperVersion = {
+  builds: Build[],
+  project_id: string,
+  project_name: string,
+  version_group: string,
+  versions: string[]
+};
 
-interface Build {
-  build: number;
-  changes: CommitChanges[];
+type Build = {
+  build: number,
+  changes: CommitChanges[],
   downloads: {
     application: {
-      name: string;
-      sha256: string;
+      name: string,
+      sha256: string
     }
-  }
-  channel: string;
-  promoted: boolean;
-  time: string;
-  version: string;
-}
+  },
+  channel: string,
+  promoted: boolean,
+  time: string,
+  version: string
+};
 
-interface CommitChanges {
-  commit: string;
-  message: string;
-  summary: string;
-}
+type CommitChanges = {
+  commit: string,
+  message: string,
+  summary: string
+};

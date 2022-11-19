@@ -37,7 +37,7 @@ export interface ServerDownloadFunction {
 }
 
 export type ServerDownloadResult = {
-  version: string;
-  client: ServerClientType;
-  build?: string;
+  version: string,
+  client: ServerClientType,
+  build?: string
 } & DownloadResult;

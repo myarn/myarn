@@ -47,41 +47,41 @@ export const getVersion = async (version: ShortVersion) => {
   return response.json() as Promise<Version>;
 };
 
-export interface VersionManifest {
+export type VersionManifest = {
   latest: {
-    release: string;
-    snapshot: string;
-  };
-  versions: ShortVersion[];
+    release: string,
+    snapshot: string
+  },
+  versions: ShortVersion[],
 }
 
 export type VersionType = 'release' | 'snapshot' | 'old_alpha' | 'old_beta'
 
-export interface ShortVersion {
-  id: string;
-  releaseTime: string;
-  time: string;
-  type: VersionType;
-  url: string;
+export type ShortVersion = {
+  id: string,
+  releaseTime: string,
+  time: string,
+  type: VersionType,
+  url: string
 }
 
-export interface Version {
-  assets: string;
+export type Version = {
+  assets: string,
   downloads: {
-    client: DonwloadDetail;
-    client_mappings?: DonwloadDetail;
-    server?: DonwloadDetail;
-    server_mappings?: DonwloadDetail;
-  };
-  id: string;
-  minimumLauncherVersion: number;
-  releaseTime: string;
-  time: string;
-  type: VersionType;
+    client: DonwloadDetail,
+    client_mappings?: DonwloadDetail,
+    server?: DonwloadDetail,
+    server_mappings?: DonwloadDetail
+  },
+  id: string,
+  minimumLauncherVersion: number,
+  releaseTime: string,
+  time: string,
+  type: VersionType
 }
 
-export interface DonwloadDetail {
-  sha1: string;
-  size: number;
-  url: string;
+export type DonwloadDetail = {
+  sha1: string,
+  size: number,
+  url: string
 }
