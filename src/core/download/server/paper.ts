@@ -6,7 +6,7 @@ import { ServerDownloadResult } from './mod.ts';
 
 export class Paper extends ServerClient { 
   static getAvailableVersions (): Promise<string[]> {
-    return new Promise(resolve => resolve([...AVAILABLE_VERSION]))
+    return new Promise(resolve => resolve([...AVAILABLE_VERSION]));
   }
 
   static async getAvailableBuilds(version: string) {
@@ -48,7 +48,7 @@ export class Paper extends ServerClient {
 }
 
 const trimVersion = (version: string) => version.split('.').slice(0, 2).join('.');
-const getPaperDownloadURL = (build: Build) => `https://api.papermc.io/v2/projects/paper/versions/${build.version}/builds/${build.build}/downloads/${build.downloads.application.name}`
+const getPaperDownloadURL = (build: Build) => `https://api.papermc.io/v2/projects/paper/versions/${build.version}/builds/${build.build}/downloads/${build.downloads.application.name}`;
 
 export const getPaperBuilds = async (versionGroup: AvailableVersion) => {
   const response = await request(`https://api.papermc.io/v2/projects/paper/version_group/${versionGroup}/builds`);

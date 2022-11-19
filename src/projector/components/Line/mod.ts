@@ -20,19 +20,19 @@ export class Line {
 
   addText (text: string | TextComponent | (() => string)): TextComponent {
     if (text instanceof Text) {
-      text.addParentLine(this)
+      text.addParentLine(this);
       this.texts.push(text);
       this.update();
       return text;
     } else if (typeof text === 'function') {
-      return this.addText(new FunctionalText(this, text))
+      return this.addText(new FunctionalText(this, text));
     } else {
       return this.addText(new Text(text));
     }
   }
 
   addTexts (...texts: (TextComponent | string)[]): TextComponent[] {
-    return texts.map(text => this.addText(text))
+    return texts.map(text => this.addText(text));
   }
 }
 

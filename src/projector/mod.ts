@@ -24,7 +24,7 @@ export class Projector {
   }
 
   get cursorEnd () {
-    return cursorRestore + cursorDown(this.lines.length) + cursorShow
+    return cursorRestore + cursorDown(this.lines.length) + cursorShow;
   }
 
   updateLine (line: Line) {

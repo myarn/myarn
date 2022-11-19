@@ -32,7 +32,7 @@ export class Purpur extends ServerClient {
         algorithm: 'md5',
         value: hash
       }
-    }
+    };
   }
 }
 
@@ -65,7 +65,7 @@ export type PurpurBuild = {
   result: string,
   timestamp: number,
   version: string
-}
+};
 
 export interface PurpurCommits {
   author: string;
