@@ -24,3 +24,5 @@ Comming soon.
 - [ ] Init command
   - [ ] From current server
 - [ ] Checksum
+- [ ] Dashboard
+   - [ ] API
