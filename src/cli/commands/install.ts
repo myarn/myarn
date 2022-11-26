@@ -14,6 +14,7 @@ export const install = new Command<{
 
   // server install
   .command('server')
+  .alias('s')
   .description('Install server')
   .type('client', client)
   .arguments('[client:client] [version:string] [build]')
