@@ -5,7 +5,7 @@ import { ServerClient } from './ServerClient.ts';
 
 export class Purpur extends ServerClient { 
   static async getAvailableVersions (): Promise<string[]> {
-    return await (await getAvailableVersions()).versions.reverse();
+    return (await getAvailableVersions()).versions.reverse();
   }
 
   static async getAvailableBuilds(version: string) {
