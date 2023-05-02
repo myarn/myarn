@@ -1,3 +1,4 @@
+import Myarn from "../../myarn.ts";
 import { ServerDownloadResult } from "./mod.ts";
 
 export abstract class ServerClient {
@@ -10,6 +11,10 @@ export abstract class ServerClient {
     value: string
   }[]> {
     return new Promise((resolve) => resolve([]));
+  }
+
+  constructor (protected myarn: Myarn) {
+
   }
 
   abstract downloadServer (path: string, version: string, build?: string): Promise<ServerDownloadResult>;

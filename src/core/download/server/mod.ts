@@ -1,21 +1,23 @@
 import type { ServerClientType } from '../../../types/index.ts';
+import Myarn from '../../myarn.ts';
 import { DownloadResult } from '../mod.ts';
 import { Paper } from './paper.ts';
 import { Purpur } from './purpur.ts';
+import { ServerClient } from './ServerClient.ts';
 import { Vanilla } from './vanilla.ts';
 
 export const downloadServer = (
-  path: string,
+  myarn: Myarn,
   client: {
     type: ServerClientType,
     mcVersion: string,
     build?: string
   }
 ): Promise<ServerDownloadResult> => {
-  return (new (getServerClient(client.type))).downloadServer(path, client.mcVersion, client.build);
+  return (new (getServerClient(client.type))(myarn)).downloadServer(myarn.directory, client.mcVersion, client.build);
 };
 
-export const getServerClient = (clientType: ServerClientType) => {
+export const getServerClient = (clientType: ServerClientType): new(myarn: Myarn) => ServerClient => {
   switch (clientType) {
     case 'vanilla':
       return Vanilla;

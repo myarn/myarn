@@ -1,7 +1,6 @@
 import { Command, EnumType } from '../../deps.ts';
 import { serverClients } from '../../types/index.ts';
-import { downloadServer } from '../../core/download/server/mod.ts';
-import { serverSelectPrompt } from '../prompts.ts';
+
 
 const client = new EnumType(serverClients);
 
@@ -11,13 +10,7 @@ export const server = new Command()
   .arguments('<client:client> <version:string> [build]')
   .action(async (_, client, version, build) => {
 
-    ({ client, version, build } = await serverSelectPrompt())
-
-    await downloadServer(Deno.cwd(), {
-      type: client,
-      mcVersion: version,
-      build
-    });
+    // ({ client, version, build } = await serverSelectPrompt())
   });
 
 export const download = new Command()

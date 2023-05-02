@@ -4,3 +4,4 @@ myarn.yaml
 myarn.lock.yaml
 test.ts
 dist/
+.env
