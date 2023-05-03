@@ -54,8 +54,10 @@ export class MyarnMetadata {
       : this.directory
   }
 
-  getServerDirecory (path: string): URL {
-    return new URL(path, this.getDirecotry(this.server.serverDirectory));
+  getServerDirecory (path?: string | URL): URL {
+    return path
+    ? new URL(path, this.getDirecotry(this.server.serverDirectory))
+    : this.getDirecotry(this.server.serverDirectory);
   }
 
   getResources () {
