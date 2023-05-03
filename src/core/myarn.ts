@@ -7,7 +7,7 @@ import { ensureDir, join, Table, Download, HashTransformStream, DownloadProgress
 import { RawResourceLocation } from '../utils/ResourceLocation.ts';
 import { Hasher } from 'https://raw.githubusercontent.com/myarn/hashed_potato/0.0.2/Hasher.ts';
 
-export const download = async (from: ResourceLocation, to: string, projector: Projector = new Projector()): Promise<string> => {
+export const download = async (from: ResourceLocation, to: URL, projector: Projector = new Projector()): Promise<string> => {
   const request = await getDownloadRequest(from, 'paper');
   const response = await fetch(request);
 
@@ -17,7 +17,7 @@ export const download = async (from: ResourceLocation, to: string, projector: Pr
   if (!contentLength) throw new Error(`response has no Content-Length header`);
 
   const hasherStream = new HashTransformStream('SHA-512');
-  const progressBarStream = new DownloadProgressStream(basename(to), 0, Number(contentLength), projector);
+  const progressBarStream = new DownloadProgressStream(basename(to.pathname), 0, Number(contentLength), projector);
 
   await new Download(response.body)
     .pipeThrough(hasherStream)
@@ -40,9 +40,9 @@ export const showResourceTable = (resourceLocations: ResourceLocation[]) => new 
   .render();
 
 // TODO: metadataから読み込んでインストールするときはハッシュチェックをする
-export const installPlugins = async (directory: string, resourceLocationStrings: string[]) => {
+export const installPlugins = async (directory: URL, resourceLocationStrings: string[]) => {
   const metadata = new MyarnMetadata(directory);
-  const pluginsDirectory = metadata.getServerDirecory('plugins');
+  const pluginsDirectory = metadata.getServerDirecory('plugins/');
   ensureDir(pluginsDirectory);
 
   const resourceLocations = getTargetResources(resourceLocationStrings, metadata);
@@ -55,7 +55,7 @@ export const installPlugins = async (directory: string, resourceLocationStrings:
     const name = getName(location);
     const fileName = `${name}.jar`;
 
-    await download(location, join(pluginsDirectory, fileName), projector).then((hash) => {
+    await download(location, new URL(fileName, pluginsDirectory), projector).then((hash) => {
       metadata.addResource('plugins/', location, fileName, hash);
     });
   }
@@ -63,7 +63,7 @@ export const installPlugins = async (directory: string, resourceLocationStrings:
   await metadata.save();
 }
 
-export const showPlugins = (directory: string) => {
+export const showPlugins = (directory: URL) => {
   const metadata = new MyarnMetadata(directory);
 
   const resourceLocations = metadata.getResourceLocations('plugins/');
@@ -71,7 +71,7 @@ export const showPlugins = (directory: string) => {
   showResourceTable(resourceLocations);
 }
 
-export const checksum = async (directory: string) => {
+export const checksum = async (directory: URL) => {
   const metadata = new MyarnMetadata(directory);
   const resources = metadata.getResourceLocations('plugins/');
 

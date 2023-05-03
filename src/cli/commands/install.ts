@@ -1,12 +1,11 @@
 import { installPlugins } from '../../core/myarn.ts';
 import { Command, EnumType } from '../../deps.ts';
 import { serverClients } from '../../types/index.ts';
+import { MyarnGlobalOptions } from './index.ts';
 
 const client = new EnumType(serverClients);
 
-export const install = new Command<{
-    root: string
-}>()
+export const install = new Command<MyarnGlobalOptions>()
   .description('Install server client, plugins.')
   .alias('i')
   .alias('add')

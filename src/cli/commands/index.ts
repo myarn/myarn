@@ -1,4 +1,7 @@
-import { Command, CompletionsCommand } from '../../deps.ts';
+import {
+  Command, CompletionsCommand,
+  resolve, toFileUrl
+} from '../../deps.ts';
 
 import { download } from './download.ts';
 import { metadata } from './metadata.ts';
@@ -10,13 +13,17 @@ import { show } from './show.ts';
 
 const cli = new Command();
 
+export type MyarnGlobalOptions = {
+  root: URL
+};
+
 cli
   .name('myarn')
   .description('Myarn. Minecraft Server Environment Manager')
   .version('0.0.1')
   .globalOption('--root <path:string>', 'root path', {
-    default: null,
-    value: (value: string): string => value ? value : Deno.cwd()
+    default: './',
+    value: (value: string): URL => new URL(toFileUrl(resolve(Deno.cwd(), value)) + '/')
   })
   .command('completions', new CompletionsCommand())
   .command('download', download)
