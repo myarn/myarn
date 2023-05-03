@@ -27,9 +27,7 @@ export const install = new Command<{
   // Plugin Install
   .command('plugin')
   .description('Install Plugin')
-  .arguments('[plugins...]')
-  .action(async ({ root }, ...plugins) => {
-    await installPlugins(root, plugins);
-  })
-
-
+  .arguments('[resources...]')
+  .action(async ({ root }, ...resources) => {
+    await installPlugins(root, resources);
+  });
