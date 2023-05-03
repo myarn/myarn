@@ -1,7 +1,7 @@
 {
   "tasks": {
     "help": "./myarn.ts --help",
-    "install": "deno install -f --allow-read --allow-write --allow-net --unstable -n myarn ./myarn.ts",
+    "install": "deno install -f --allow-read --allow-write --allow-net=api.github.com,objects.githubusercontent.com --allow-env --unstable -n myarn ./myarn.ts",
     "compile": "deno compile --allow-read --allow-write --allow-net --unstable ./myarn.ts",
     "compile-lite": "deno compile --lite --allow-read --allow-write --allow-net --unstable ./myarn.ts"
   }
