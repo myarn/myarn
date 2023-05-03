@@ -1,7 +1,6 @@
 import { Command, EnumType } from '../../deps.ts';
 import { serverClients } from '../../types/index.ts';
 
-
 const client = new EnumType(serverClients);
 
 export const server = new Command()

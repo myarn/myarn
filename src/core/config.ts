@@ -18,17 +18,17 @@ export class MyarnMetadata {
   static serverFileName = 'myarn.yaml';
   static currentFileVersion = 1;
 
-  protected serverFileName: string;
+  protected serverFilePath: URL;
   protected server: MyarnServer;
 
   constructor (
-    readonly directory: string,
+    readonly directory: URL,
   ) {
-    this.serverFileName = join(directory, MyarnMetadata.serverFileName);
+    this.serverFilePath = new URL(MyarnMetadata.serverFileName, directory);
 
     // ServerConfigFile
-    if (isFile(this.serverFileName)) {
-      this.server = YAML.parse(Deno.readTextFileSync(this.serverFileName)) as MyarnServer;
+    if (isFile(this.serverFilePath)) {
+      this.server = YAML.parse(Deno.readTextFileSync(this.serverFilePath)) as MyarnServer;
     } else {
       this.server = {
         fileVersion: MyarnMetadata.currentFileVersion,
@@ -48,14 +48,16 @@ export class MyarnMetadata {
     };
   }
 
-  getDirecotry (...paths: string[]): string {
-    return paths.length === 0
-      ? this.directory
-      : join(this.directory, ...paths);
+  getDirecotry (path?: string): URL {
+    return path
+      ? new URL(path, this.directory)
+      : this.directory
   }
 
-  getServerDirecory (...paths: string[]): string {
-    return this.getDirecotry(this.server.serverDirectory || '', ...paths);
+  getServerDirecory (path?: string | URL): URL {
+    return path
+    ? new URL(path, this.getDirecotry(this.server.serverDirectory))
+    : this.getDirecotry(this.server.serverDirectory);
   }
 
   getResources () {
@@ -65,14 +67,14 @@ export class MyarnMetadata {
   getResourceLocations (resourcesDirectory: string) {
     return Object.entries(this.getResources()[resourcesDirectory] || {})
       .map<ResourceWithDetails>(([key, raw]) => {
-        const locationPath = new URL(this.getServerDirecory(resourcesDirectory, key), 'file://');
+        const locationPath = new URL(this.getServerDirecory(`${resourcesDirectory}${key}`, ), 'file://');
         return new ResourceWithDetails(raw, locationPath, raw.hash);
       });
   }
 
   async save () {
     deleteUndefinedKeys(this.server);
-    await Deno.writeTextFile(this.serverFileName, YAML.stringify(this.server as unknown as Record<string, unknown>, {
+    await Deno.writeTextFile(this.serverFilePath, YAML.stringify(this.server as unknown as Record<string, unknown>, {
       skipInvalid: true
     }), {
       create: true

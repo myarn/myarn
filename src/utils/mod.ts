@@ -1,3 +1,5 @@
+import { resolve } from 'https://deno.land/std@0.185.0/path/win32.ts';
+
 export const isFile = (path: string | URL): boolean => {
   try {
     const info = Deno.statSync(path);
