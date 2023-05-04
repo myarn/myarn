@@ -3,7 +3,7 @@ import './loadEnv.ts';
 import { getDownloadRequest, getName } from './download/mod.ts';
 import { MyarnMetadata } from './config.ts';
 import { ResourceLocation, isFile } from '../utils/mod.ts';
-import { ensureDir, join, Table, Download, HashTransformStream, DownloadProgressStream, basename, Projector, colors } from '../deps.ts';
+import { ensureDir, Table, Download, HashTransformStream, DownloadProgressStream, basename, Projector, colors } from '../deps.ts';
 import { RawResourceLocation } from '../utils/ResourceLocation.ts';
 import { Hasher } from 'https://raw.githubusercontent.com/myarn/hashed_potato/0.0.2/Hasher.ts';
 
