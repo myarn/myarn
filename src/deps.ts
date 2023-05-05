@@ -17,7 +17,7 @@ export * from 'https://raw.githubusercontent.com/myarn/projector/0.0.3/mod.ts';
 export {
   DownloadProgressStream,
   Download
-} from 'https://raw.githubusercontent.com/myarn/download/0.0.4/mod.ts';
+} from 'https://raw.githubusercontent.com/myarn/download/0.0.5/mod.ts';
 
 export {
   HashTransformStream
