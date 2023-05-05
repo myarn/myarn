@@ -16,8 +16,8 @@ export * from 'https://cdn.skypack.dev/filesize@10.0.5';
 export * from 'https://raw.githubusercontent.com/myarn/projector/0.0.3/mod.ts';
 export {
   DownloadProgressStream,
-  Download
-} from 'https://raw.githubusercontent.com/myarn/download/0.0.5/mod.ts';
+  Download,
+} from 'https://raw.githubusercontent.com/myarn/download/0.1.0/mod.ts';
 
 export {
   HashTransformStream
