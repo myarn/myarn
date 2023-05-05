@@ -25,14 +25,14 @@ export const download = async (from: ResourceLocation, to: URL, projector: Proje
     .downloadTo(to);
 
   return hasherStream.digest('hex');
-}
+};
 
 export const getTargetResources = (resourceLocationStrings: string[], metadata: MyarnMetadata) => 
   resourceLocationStrings.length !== 0
     // リソースをそのままパースする
     ? resourceLocationMapping(resourceLocationStrings)
     // プラグインが一個も渡されなかった場合myarn.yamlから取得してくる
-    : metadata.getResourceLocations('plugins/')
+    : metadata.getResourceLocations('plugins/');
 export const resourceLocationMapping = (raws: RawResourceLocation[]): ResourceLocation[] => raws.map<ResourceLocation>(raw => new ResourceLocation(raw));
 export const showResourceTable = (resourceLocations: ResourceLocation[]) => new Table()
   .header(['Platform', 'Location', 'Version'])
@@ -61,7 +61,7 @@ export const installPlugins = async (directory: URL, resourceLocationStrings: st
   }
 
   await metadata.save();
-}
+};
 
 export const showPlugins = (directory: URL) => {
   const metadata = new MyarnMetadata(directory);
@@ -69,13 +69,13 @@ export const showPlugins = (directory: URL) => {
   const resourceLocations = metadata.getResourceLocations('plugins/');
 
   showResourceTable(resourceLocations);
-}
+};
 
 export const checksum = async (directory: URL) => {
   const metadata = new MyarnMetadata(directory);
   const resources = metadata.getResourceLocations('plugins/');
 
-  let hasError = false
+  let hasError = false;
 
   const projector = new Projector();
 
@@ -83,7 +83,7 @@ export const checksum = async (directory: URL) => {
     if (isFile(resource.url)) {
       const file = await Deno.open(resource.url, { read: true });
       const hasher = new Hasher('SHA-512');
-      await hasher.updateByReadableStream(file.readable)
+      await hasher.updateByReadableStream(file.readable);
       const hash = hasher.digest('hex');
 
       if (hash == resource.hash) {
@@ -99,4 +99,4 @@ export const checksum = async (directory: URL) => {
   }
 
   if (hasError) Deno.exit(1);
-}
+};
