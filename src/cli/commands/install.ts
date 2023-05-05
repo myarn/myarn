@@ -1,7 +1,7 @@
-import { installPlugins } from '../../core/myarn.ts';
 import { Command, EnumType } from '../../deps.ts';
 import { serverClients } from '../../types/index.ts';
 import { MyarnGlobalOptions } from './index.ts';
+import { installResources } from '../cli-api/installResources.ts';
 
 const client = new EnumType(serverClients);
 
@@ -28,5 +28,5 @@ export const install = new Command<MyarnGlobalOptions>()
   .description('Install Plugin')
   .arguments('[resources...]')
   .action(async ({ root }, ...resources) => {
-    await installPlugins(root, resources);
+    await installResources(root, resources);
   });
