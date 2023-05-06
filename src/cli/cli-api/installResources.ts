@@ -5,7 +5,6 @@ import { Projector, DownloadProgressStream, ensureDir } from '../../deps.ts';
 
 import { ResourceWithDisplay, download } from './mod.ts';
 
-
 export const installResources = async (directory: URL, resourceLocationStrings: string[]) => {
   const metadata = new MyarnMetadata(directory);
   const projector = new Projector();
