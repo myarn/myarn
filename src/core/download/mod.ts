@@ -10,6 +10,7 @@ export type Loader = typeof LOADERS[number];
 export interface DownloadPlatform {
   getDownloadRequest (resourceLocation: ResourceLocation, loader: Loader): Promise<Request>;
   getName (resourceLocation: ResourceLocation): string;
+  getLatestVersion (resourceLocation: ResourceLocation): Promise<string>;
 }
 
 export const getDownloadPlatform = (resourceLocation: ResourceLocation): DownloadPlatform => {

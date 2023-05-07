@@ -94,6 +94,14 @@ const github: DownloadPlatform = {
 
   getName: (resourceLocation)  => {
     return parseGithubLocation(resourceLocation.location).repo;
+  },
+
+  getLatestVersion: async (resourceLocation) => {
+    const { owner, repo } = parseGithubLocation(resourceLocation.location);
+    const latestRelease = await octokit.rest.repos.getLatestRelease({ owner, repo })
+
+    const latestVersion = latestRelease.data.tag_name;
+    return latestVersion;
   }
 };
 
